@@ -1,0 +1,20 @@
+{
+  "name": "priconne-cb",
+  "version": "0.0.1",
+  "description": "A priconne Clan Battle API, intended to be used for managing CB",
+  "main": "./src/priconne-cb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/priconne-cb.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xImouto/priconne-cb.git"
+  },
+  "author": "xImouto",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xImouto/priconne-cb/issues"
+  },
+  "homepage": "https://github.com/xImouto/priconne-cb#readme"
+}
