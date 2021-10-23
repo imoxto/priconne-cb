@@ -15,40 +15,45 @@ const getBossTier = (bossRound) => {
   return 5
 }
 
-//test
-for (let index = 1; index < 100; index++) {
-  console.log(index, getBossTier(index));
-}
 
-//
+//should work
 const bossRoundUpdate = (bossKilled) => {
-  if (currentRound[bossKilled - 1] != maxRound) currentRound[bossKilled - 1]++;
-  else console.log('cant hit B'+bossKilled);
-  updateMinMaxRound(bossKilled);
-  console.log(currentRound, currentTier);
+  if (currentRound[bossKilled - 1] != maxRound) {
+    currentRound[bossKilled - 1]++;
+    updateMinMaxRound(bossKilled);
+    console.log('Killed B'+bossKilled, currentRound, currentTier);
+  } else {
+    console.log('cant hit B'+bossKilled);
+  }
 }
 
 //
 const updateMinMaxRound = bossKilled => {
-  let canUpdate = false;
-  if (currentRound.every(n => n!=minRound)) canUpdate=true;
+  let canUpdate = currentRound.every(n => n!=minRound);
   if (canUpdate) {
-    minRound++;
-    maxRound++;
+    if (cbInfo.tierChanges.includes(maxRound)) {
+      if (currentRound.every((n) => n==maxRound)) {
+        minRound++;
+        maxRound++;
+        currentTier++;
+        console.log('Entered Tier '+currentTier);
+      }
+    } else {
+      minRound++;
+      maxRound++;
+    }
   }
 }
 
 
 //testing
-for (let index = 0; index < 50; index++) {
-  if (index % 3 == 1) {
-    console.log('hit boss 1,2,4')
-    bossRoundUpdate(1)
-    bossRoundUpdate(2)
-    bossRoundUpdate(4)
-  } else {
-    console.log('hit boss 3,5')
-    bossRoundUpdate(3)
-    bossRoundUpdate(5)
-  }
+for (let index = 0; index < 1800; index++) {
+  if (Math.random() < 0.2) bossRoundUpdate(1);
+  else if (Math.random() < 0.4) bossRoundUpdate(2);
+  else if (Math.random() < 0.6) bossRoundUpdate(3);
+  else if (Math.random() < 0.8) bossRoundUpdate(4);
+  else bossRoundUpdate(5);
 }
+setTimeout(()=> {
+  console.log(currentRound,currentTier)
+},10000)
