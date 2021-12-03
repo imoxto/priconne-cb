@@ -1,59 +1,91 @@
-const cbInfo = require('../data/cb_info.json');
-const currentRound = [1, 1, 1, 1, 1];
-let maxRound = 3;
-let minRound = 1;
-let currentTier = 1;
+const cbInfoJson = require('../data/cb_info.json');
+const assert = require('assert');
+const WAVE_DENSITY = 2;
+const cb = {
+  "tierChanges": [4, 11, 31, 41],
+  "hp": [
+    [4000000, 6000000, 12000000, 19000000, 90000000],
+    [6000000, 8000000, 15000000, 20000000, 95000000],
+    [8000000, 10000000, 18000000, 21000000, 100000000],
+    [10000000, 12000000, 20000000, 23000000, 110000000],
+    [12000000, 15000000, 23000000, 27000000, 130000000]
+  ],
+  "boss": [
+    {hp: 4000000, isHittable: true},
+    {hp: 6000000, isHittable: true},
+    {hp: 8000000, isHittable: true},
+    {hp: 10000000, isHittable: true},
+    {hp: 12000000, isHittable: true}
+  ],
+  "currentRound": [1, 1, 1, 1, 1],
+  "minRound": 1,
+  "currentTier": 1
+}
+
+//works ... maybe..
+const hitBoss = (boss, amount, cb) => {
+  if (!cb.boss[boss-1].isHittable) {
+    console.log("cant hit B" + boss);
+    return
+  }
+  if (amount>cb.boss[boss-1].hp) {
+    killBoss(boss, cb);
+  } else {
+    cb.boss[boss-1].hp -= amount;
+    console.log("Hitted B"+boss+" for "+amount);
+  }
+};
 
 //works
-const getBossTier = (bossRound) => {
-  if (bossRound < 1) {
-    throw new Error('invalid boss round');
-  }
-  for (i = 0; i < cbInfo.tierChanges.length; i++) {
-    if (bossRound < cbInfo.tierChanges[i]) return i + 1// remove +1 if the cbInfo.tierChanges length is 5
-  }
-  return 5
-}
-
-
-//should work
-const bossRoundUpdate = (bossKilled) => {
-  if (currentRound[bossKilled - 1] != maxRound) {
-    currentRound[bossKilled - 1]++;
-    updateMinMaxRound(bossKilled);
-    console.log('Killed B'+bossKilled, currentRound, currentTier);
-  } else {
-    console.log('cant hit B'+bossKilled);
+const killBoss = (boss, cb) => {
+  if (cb.boss[boss-1].isHittable) {
+    cb.currentRound[boss - 1]++;
+    console.log('Killed B' + boss, cb.currentRound, cb.currentTier);
+    checkTier(cb);
+    //console.log(boss, cb.boss[boss-1]);
+    cb.boss[boss-1].hp = cb.hp[boss-1][cb.currentTier-1];
+    if (cb.currentRound[boss - 1] == cb.minRound + 2) cb.boss[boss-1].isHittable=false;
+    //console.log(boss, cb.boss[boss-1]);
   }
 }
 
-//
-const updateMinMaxRound = bossKilled => {
-  let canUpdate = currentRound.every(n => n!=minRound);
-  if (canUpdate) {
-    if (cbInfo.tierChanges.includes(maxRound)) {
-      if (currentRound.every((n) => n==maxRound)) {
-        minRound++;
-        maxRound++;
-        currentTier++;
-        console.log('Entered Tier '+currentTier);
+//works
+const checkTier = cb => {
+  if (cb.currentRound.every(n => n != cb.minRound)) {
+    if (cb.tierChanges.includes(cb.minRound + 2)) {
+      if (cb.currentRound.every(n => n == cb.minRound + 2)) {
+        cb.minRound++;
+        cb.currentTier++;
+        for (let i in cb.boss) {
+          cb.boss[i].hp = cb.hp[i][cb.currentTier-1];
+          cb.boss[i].isHittable = true;
+        }
+        console.log('Entered Tier ' + cb.currentTier);
       }
     } else {
-      minRound++;
-      maxRound++;
+      cb.minRound++;
+      for (let i = 0; i < cb.boss.length; i++) {        
+        cb.boss[i].isHittable = true;
+        //console.log(i, cb.boss[i]);
+      }
     }
   }
 }
 
 
-//testing
-for (let index = 0; index < 1800; index++) {
-  if (Math.random() < 0.2) bossRoundUpdate(1);
-  else if (Math.random() < 0.4) bossRoundUpdate(2);
-  else if (Math.random() < 0.6) bossRoundUpdate(3);
-  else if (Math.random() < 0.8) bossRoundUpdate(4);
-  else bossRoundUpdate(5);
+/*/testing
+for (let index = 0; index < 500; index++) {
+  const b= Math.floor(Math.random()*5+1);
+  killBoss(b, cb);
+}*/
+
+for (let index = 0; index < 800; index++) {
+  const amnt = Math.floor(Math.random()*20000000)+10000000;
+  const b= Math.floor(Math.random()*5+1);
+  hitBoss(b, amnt, cb);
+  //console.log(b, amnt, cb);
 }
-setTimeout(()=> {
-  console.log(currentRound,currentTier)
-},10000)
+setTimeout(() => {
+  console.log(cb)
+}, 3000)
+
