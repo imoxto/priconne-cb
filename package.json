@@ -1,11 +1,13 @@
 {
   "name": "priconne-cb",
-  "version": "0.0.1",
-  "description": "A priconne Clan Battle API, intended to be used for managing CB",
-  "main": "./src/priconne-cb.js",
+  "version": "0.1.0",
+  "description": "A priconne Clan Battle Simulator, intended to be used for managing CB",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/priconne-cb.js"
+    "test": "jest",
+    "start": "node ./dist/index.js",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -16,5 +18,13 @@
   "bugs": {
     "url": "https://github.com/xImouto/priconne-cb/issues"
   },
-  "homepage": "https://github.com/xImouto/priconne-cb#readme"
+  "homepage": "https://github.com/xImouto/priconne-cb#readme",
+  "devDependencies": {
+    "typescript": "^4.5.5",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.10",
+    "jest" : "^27.4.7",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.3"
+  }
 }
