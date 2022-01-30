@@ -9,7 +9,7 @@
 
 ## About:
 
-An library intended to simulate Princess Connect! Re:DIVE Clan Battle game mode. it can be used by discord bots for example by extending the CB class
+A small library intended to simulate the clan battle game mode of Princess Connect! Re:DIVE. It can be used by discord bots, etc for example by extending the `CB` class.
 
 
 ## Usage:
