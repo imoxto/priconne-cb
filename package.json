@@ -19,6 +19,7 @@
     "url": "https://github.com/xImouto/priconne-cb/issues"
   },
   "homepage": "https://github.com/xImouto/priconne-cb#readme",
+  "keywords": ["priconne","clan battle","cb"],
   "devDependencies": {
     "typescript": "^4.5.5",
     "@types/jest": "^27.4.0",
