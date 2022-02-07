@@ -29,4 +29,5 @@ A small package intended to simulate the clan battle game mode of Princess Conne
 
 ## To-do:
 
-tracking user hits
+- custom error class to use CB-related Errors
+- tracking user hits

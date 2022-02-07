@@ -130,6 +130,45 @@ class CB {
 			this.kill(boss);
 		} else this.boss[boss].hp = amount;
 	}
+
+	/**
+	 * Customises maxHP instead of using the hard coded default one
+	 * @param arr 2d array with max HPs of bosses in the format arr[boss number][tier]
+	 */
+	setMaxHp(arr: number[][]) {
+		if (arr.length != 5 || !arr.every((v) => v.length == 5))
+			throw new Error('HP has to be 5x5 Matrix');
+		else {
+			this.HP = arr;
+		}
+	}
+
+	/**
+	 * Customises tier changes instead of using the hard coded default one
+	 * @param arr Array with each element denoting the first round of a tier
+	 */
+	setTierChanges(arr: number[]) {
+		if (arr.length != 5) throw new Error('TierChanges size has to be 5');
+		else {
+			this.TierChanges = arr;
+		}
+	}
+
+	/**
+	 *
+	 * @returns 2d array with max HPs of bosses in the format arr[boss number][tier]
+	 */
+	getMaxHp() {
+		return JSON.parse(JSON.stringify(this.HP));
+	}
+
+	/**
+	 *
+	 * @returns Array with each element denoting the first round of a tier
+	 */
+	getTierChanges() {
+		return JSON.parse(JSON.stringify(this.TierChanges));
+	}
 }
 
 export default CB;
