@@ -75,7 +75,7 @@ describe('CB', () => {
 			{ hp: 12000000, maxHp: 12000000, isHittable: false },
 			{ hp: 15000000, maxHp: 15000000, isHittable: true },
 		]);
-		cb.adjustRounds([41, 41, 41, 41, 41]);
+		cb.adjustRounds([45, 45, 45, 46, 46]);
 		expect(cb.boss).toStrictEqual([
 			{ hp: 90000000, maxHp: 90000000, isHittable: true },
 			{ hp: 95000000, maxHp: 95000000, isHittable: true },
@@ -84,6 +84,32 @@ describe('CB', () => {
 			{ hp: 130000000, maxHp: 130000000, isHittable: true },
 		]);
 		expect(cb.tier).toStrictEqual(4);
+	});
+
+	test('adjustRounds() should set correct hp', () => {
+		expect(() => {
+			cb.adjustRounds([41, 41, 41, 41, 41], [48000000, 50000000, 50000000, 50000000]);
+		}).toThrowError();
+		cb.adjustRounds([11, 9, 10, 11, 9], [3000000, 0, 5000000, 4000000, 19000000]);
+		expect(cb.tier).toStrictEqual(1);
+		expect(cb.boss).toStrictEqual([
+			{ hp: 3000000, maxHp: 6000000, isHittable: false },
+			{ hp: 8000000, maxHp: 8000000, isHittable: true },
+			{ hp: 5000000, maxHp: 10000000, isHittable: true },
+			{ hp: 4000000, maxHp: 12000000, isHittable: false },
+			{ hp: 15000000, maxHp: 15000000, isHittable: true },
+		]);
+		expect(cb.rounds).toStrictEqual([11, 9, 10, 11, 9]);
+		cb.adjustRounds([9, 10, 10, 8, 10], [3000000, 0, 5000000, 4000000, 19000000]);
+		expect(cb.tier).toStrictEqual(1);
+		expect(cb.boss).toStrictEqual([
+			{ hp: 3000000, maxHp: 6000000, isHittable: true },
+			{ hp: 8000000, maxHp: 8000000, isHittable: false },
+			{ hp: 5000000, maxHp: 10000000, isHittable: false },
+			{ hp: 4000000, maxHp: 12000000, isHittable: true },
+			{ hp: 15000000, maxHp: 15000000, isHittable: false },
+		]);
+		expect(cb.rounds).toStrictEqual([9, 10, 10, 8, 10]);
 	});
 });
 

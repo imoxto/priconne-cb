@@ -69,7 +69,7 @@ class CB {
 				let tempHp = this.boss[idx].hp;
 				if (hp && hp[idx] > 0 && hp[idx] <= this.HP[idx][this.tier]) tempHp = hp[idx];
 				return {
-					hp: tempHp === 0 ? this.HP[idx][this.tier] : tempHp,
+					hp: tempHp <= 0 ? this.HP[idx][this.tier] : tempHp,
 					maxHp: this.HP[idx][this.tier],
 					isHittable,
 				};
