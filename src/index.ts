@@ -1,7 +1,7 @@
 class CB {
 	// constants ...should change every cb lol
-	private TierChanges = [1, 4, 11, 31, 41];
-	private HP = [
+	private TierChanges: number[] = [1, 4, 11, 31, 41];
+	private HP: number[][] = [
 		[4000000, 6000000, 12000000, 19000000, 90000000],
 		[6000000, 8000000, 15000000, 20000000, 95000000],
 		[8000000, 10000000, 18000000, 21000000, 100000000],
@@ -23,12 +23,21 @@ class CB {
 	minRound: number = 1;
 	maxRound: number = 1;
 
+	/**
+	 * Starts a cb instance at a specified round(s) or by default round 1
+	 * @param startRounds the specified round(s)
+	 */
 	constructor(startRounds: number[] | number = 1) {
 		if (startRounds === [1, 1, 1, 1, 1] || startRounds === 1) return;
 		else this.adjustRounds(startRounds);
 	}
 
 	// Functions
+	/**
+	 * Force adjust CB rounds based on the specified round(s) and hp
+	 * @param rounds the specified round(s) default is 1
+	 * @param hp the specified hp with default max hp
+	 */
 	adjustRounds(rounds: number[] | number = 1, hp?: number[]) {
 		if (Array.isArray(rounds)) {
 			if (rounds.length !== 5 || (hp && hp.length !== 5))
@@ -42,6 +51,10 @@ class CB {
 		this.sync(hp);
 	}
 
+	/**
+	 * Syncs the cb instance based on its current rounds and hp if provided. It is/should be called every time the cb round is changed
+	 * @param hp the optional provided hp
+	 */
 	sync(hp?: number[]) {
 		this.minRound = Math.min(...this.rounds);
 		this.maxRound = Math.max(...this.rounds);
@@ -77,6 +90,10 @@ class CB {
 		});
 	}
 
+	/**
+	 * Kills the specified boss
+	 * @param boss boss number (0 to 4) where 0 is boss 1, 1 is boss 2, 2 is boss 3 and so on.
+	 */
 	kill(boss: 0 | 1 | 2 | 3 | 4) {
 		if (this.boss[boss].isHittable) {
 			this.boss[boss].hp = 0;
@@ -87,6 +104,11 @@ class CB {
 		}
 	}
 
+	/**
+	 * Hits a boss for a specified amount
+	 * @param boss boss number (0 to 4) where 0 is boss 1, 1 is boss 2, 2 is boss 3 and so on.
+	 * @param amount amount of damage dealt
+	 */
 	hit(boss: 0 | 1 | 2 | 3 | 4, amount: number) {
 		if (!this.boss[boss].isHittable) throw new Error('Boss is not Hittable!');
 		if (amount >= this.boss[boss].hp) {
@@ -96,6 +118,11 @@ class CB {
 		}
 	}
 
+	/**
+	 * Force sets current hp of a boss to a specified amount
+	 * @param boss boss number (0 to 4) where 0 is boss 1, 1 is boss 2, 2 is boss 3 and so on.
+	 * @param amount suitable hp amount
+	 */
 	setHp(boss: 0 | 1 | 2 | 3 | 4, amount: number) {
 		if (!this.boss[boss].isHittable) throw new Error('Boss is not Hittable!');
 		if (amount > this.boss[boss].maxHp) this.boss[boss].hp = this.boss[boss].maxHp;
