@@ -8,6 +8,8 @@ package-lock.json
 # testing files
 coverage/
 tests/
+test.js
+sandbox.js
 
 # config files
 tsconfig.json

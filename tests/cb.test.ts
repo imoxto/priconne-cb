@@ -111,6 +111,51 @@ describe('CB', () => {
 		]);
 		expect(cb.rounds).toStrictEqual([9, 10, 10, 8, 10]);
 	});
+
+	test('getters should not be able to modify original', () => {
+		let arr = cb.getMaxHp();
+		let arr2 = cb.getTierChanges();
+		arr.push([1]);
+		arr2.push(2);
+		console.log(arr, arr2);
+
+		expect(cb.getMaxHp()).toStrictEqual(cb1.getMaxHp());
+		expect(cb.getTierChanges()).toStrictEqual(cb1.getTierChanges());
+	});
+
+	test('setters should work', () => {
+		expect(() => {
+			cb.setMaxHp([
+				[1, 3, 5, 6, 7],
+				[1, 3, 6, 6, 8],
+				[2, 3, 5, 6],
+				[2, 3, 5, 6],
+				[3, 10, 5, 6],
+			]);
+		}).toThrowError();
+		expect(() => {
+			cb.setMaxHp([[1, 3, 5, 6, 7]]);
+		}).toThrowError();
+		expect(() => {
+			cb.setTierChanges([1, 3, 5, 6]);
+		}).toThrowError();
+		cb.setMaxHp([
+			[1, 3, 5, 6, 7],
+			[1, 3, 6, 8, 8],
+			[2, 3, 8, 8, 11],
+			[2, 3, 8, 8, 12],
+			[3, 10, 10, 10, 16],
+		]);
+		cb.setTierChanges([1, 3, 5, 6, 7]);
+		expect(cb.getMaxHp()).toStrictEqual([
+			[1, 3, 5, 6, 7],
+			[1, 3, 6, 8, 8],
+			[2, 3, 8, 8, 11],
+			[2, 3, 8, 8, 12],
+			[3, 10, 10, 10, 16],
+		]);
+		expect(cb.getTierChanges()).toStrictEqual([1, 3, 5, 6, 7]);
+	});
 });
 
 describe('CB interaction', () => {

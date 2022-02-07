@@ -1,12 +1,11 @@
 {
   "name": "priconne-cb",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A priconne Clan Battle Simulator, intended to be used for managing CB",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
-    "start": "node ./dist/index.js",
     "build": "tsc",
     "build:watch": "tsc -w"
   },
@@ -15,12 +14,12 @@
     "url": "git+https://github.com/xImouto/priconne-cb.git"
   },
   "author": "xImouto",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/xImouto/priconne-cb/issues"
   },
   "homepage": "https://github.com/xImouto/priconne-cb#readme",
-  "keywords": ["priconne","clan battle","cb"],
+  "keywords": ["priconne-cb","clan-battle","princess-connect-redive","re:dive"],
   "devDependencies": {
     "typescript": "^4.5.5",
     "@types/jest": "^27.4.0",

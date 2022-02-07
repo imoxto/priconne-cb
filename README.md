@@ -4,13 +4,11 @@
 
 - [About](#About)
 - [Usage](#Usage)
-- [to-do](#to-do)
-
+- [To-do](#To-do)
 
 ## About:
 
 A small package intended to simulate the clan battle game mode of Princess Connect! Re:DIVE. It can be used by discord bots, etc for example by extending the `CB` class.
-
 
 ## Usage:
 
@@ -29,7 +27,14 @@ A small package intended to simulate the clan battle game mode of Princess Conne
 `kill(boss: 0 | 1 | 2 | 3 | 4) // kills boss`  
 `setHp(boss: 0 | 1 | 2 | 3 | 4, amount: number) // force set the hp of a boss to an amount`
 
+#### change max HPs and Tier change infos
 
-## to-do:
+`setMaxHp(arr: number[][]) // customises maxHP instead of using the hard coded default one`
+`setTierChanges(arr: number[]) // Customises tier changes instead of using the hard coded default one`
+`getMaxHp() // returns a 2d array with max HPs of bosses in the format arr[boss number][tier]`
+`getTierChanges() // returns Array with each element denoting the first round of a tier`
 
-tracking user hits
+## To-do:
+
+- custom error class to use CB-related Errors
+- tracking user hits
