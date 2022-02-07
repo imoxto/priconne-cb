@@ -4,13 +4,11 @@
 
 - [About](#About)
 - [Usage](#Usage)
-- [to-do](#to-do)
-
+- [To-do](#To-do)
 
 ## About:
 
 A small package intended to simulate the clan battle game mode of Princess Connect! Re:DIVE. It can be used by discord bots, etc for example by extending the `CB` class.
-
 
 ## Usage:
 
@@ -29,7 +27,6 @@ A small package intended to simulate the clan battle game mode of Princess Conne
 `kill(boss: 0 | 1 | 2 | 3 | 4) // kills boss`  
 `setHp(boss: 0 | 1 | 2 | 3 | 4, amount: number) // force set the hp of a boss to an amount`
 
-
-## to-do:
+## To-do:
 
 tracking user hits
