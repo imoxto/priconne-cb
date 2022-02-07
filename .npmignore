@@ -1,4 +1,13 @@
+# src files
 node_modules/
 src/
 package-lock.json
+
+#testing files
 coverage/
+tests/
+
+# config files
+tsconfig.json
+.prettierrc.json
+jest.config.json
