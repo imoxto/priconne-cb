@@ -36,5 +36,6 @@ A small package intended to simulate the clan battle game mode of Princess Conne
 
 ## To-do:
 
+- update tier changes and boss max hps for Feb 2022 CB
 - custom error class to use CB-related Errors
 - tracking user hits
