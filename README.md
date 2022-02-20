@@ -34,8 +34,25 @@ A small package intended to simulate the clan battle game mode of Princess Conne
 `getMaxHp() // returns a 2d array with max HPs of bosses in the format arr[boss number][tier]`
 `getTierChanges() // returns Array with each element denoting the first round of a tier`
 
+#### restoring previous cb progress
+
+```js
+// for example from a database
+db.store({
+	TierChanges: cb.getTierChanges(),
+	HP: cb.getMaxHp(),
+	rounds: cb.rounds,
+	boss: cb.boss,
+	tier: cb.tier,
+	minRound: cb.minRound,
+	maxRound: cb.maxRound,
+});
+
+// then restore same progress from the database
+const cb = loadProgess(await db.find(/*query*/));
+```
+
 ## To-do:
 
-- update tier changes and boss max hps for Feb 2022 CB
 - custom error class to use CB-related Errors
 - tracking user hits
