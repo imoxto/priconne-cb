@@ -1,25 +1,46 @@
+import { CbProgress } from './types';
+import { CbProgressSchema } from './schemas';
+
+export const HP = [
+	[6000000, 6000000, 12000000, 19000000, 95000000],
+	[8000000, 8000000, 14000000, 20000000, 100000000],
+	[10000000, 10000000, 17000000, 23000000, 110000000],
+	[12000000, 12000000, 19000000, 25000000, 120000000],
+	[15000000, 15000000, 22000000, 27000000, 130000000],
+];
+
+export const TIER_CHANGES = [1, 4, 11, 31, 39];
+
+/**
+ * A fuction to return a new CB element with previous progress
+ * @param prog previous CB progess with variables only
+ * @param validate Set it to false if validation not required
+ */
+export const loadProgress = async (prog: CbProgress, validate = true) => {
+	const cb = new CB();
+	if (validate) await CbProgressSchema.validate(prog);
+	cb.setMaxHp(prog.HP);
+	cb.setTierChanges(prog.TierChanges);
+	cb.boss = prog.boss;
+	cb.rounds = prog.rounds;
+	cb.minRound = prog.minRound;
+	cb.maxRound = prog.maxRound;
+
+	return cb;
+};
+
 class CB {
 	// constants ...should change every cb lol
-	private TierChanges: number[] = [1, 4, 11, 31, 41];
-	private HP: number[][] = [
-		[4000000, 6000000, 12000000, 19000000, 90000000],
-		[6000000, 8000000, 15000000, 20000000, 95000000],
-		[8000000, 10000000, 18000000, 21000000, 100000000],
-		[10000000, 12000000, 20000000, 23000000, 110000000],
-		[12000000, 15000000, 23000000, 27000000, 130000000],
-	];
+	private TierChanges: number[] = TIER_CHANGES;
+	private HP: number[][] = HP;
 
 	// variables
 	rounds: number[] = [1, 1, 1, 1, 1];
-	boss = [
-		{ hp: 4000000, maxHp: 4000000, isHittable: true },
-		{ hp: 6000000, maxHp: 6000000, isHittable: true },
-		{ hp: 8000000, maxHp: 8000000, isHittable: true },
-		{ hp: 10000000, maxHp: 10000000, isHittable: true },
-		{ hp: 12000000, maxHp: 12000000, isHittable: true },
-	];
-
 	tier: number = 0;
+	boss = this.HP.map((v) => {
+		return { hp: v[this.tier] as number, maxHp: v[this.tier], isHittable: true };
+	});
+
 	minRound: number = 1;
 	maxRound: number = 1;
 
