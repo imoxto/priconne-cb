@@ -1,4 +1,4 @@
-import CB from '../src';
+import CB, { HP } from '../src';
 
 describe('CB', () => {
 	let cb = new CB();
@@ -7,11 +7,11 @@ describe('CB', () => {
 	test('constructor() sets proper tier and hp', () => {
 		expect(cb.tier).toStrictEqual(0);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 4000000, maxHp: 4000000, isHittable: true },
-			{ hp: 6000000, maxHp: 6000000, isHittable: true },
-			{ hp: 8000000, maxHp: 8000000, isHittable: true },
-			{ hp: 10000000, maxHp: 10000000, isHittable: true },
-			{ hp: 12000000, maxHp: 12000000, isHittable: true },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: true },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 	});
 	test('constructor() sets proper rounds', () => {
@@ -41,47 +41,47 @@ describe('CB', () => {
 	test('bosses should have correct isHittable attribute, and tier should be correct', () => {
 		cb.adjustRounds([4, 3, 3, 3, 3]);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 4000000, maxHp: 4000000, isHittable: false },
-			{ hp: 6000000, maxHp: 6000000, isHittable: true },
-			{ hp: 8000000, maxHp: 8000000, isHittable: true },
-			{ hp: 10000000, maxHp: 10000000, isHittable: true },
-			{ hp: 12000000, maxHp: 12000000, isHittable: true },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: false },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 		expect(cb.tier).toStrictEqual(0);
 		cb.adjustRounds([25, 27, 26, 26, 27]);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 12000000, maxHp: 12000000, isHittable: true },
-			{ hp: 15000000, maxHp: 15000000, isHittable: false },
-			{ hp: 18000000, maxHp: 18000000, isHittable: true },
-			{ hp: 20000000, maxHp: 20000000, isHittable: true },
-			{ hp: 23000000, maxHp: 23000000, isHittable: false },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: true },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: false },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: false },
 		]);
 		expect(cb.tier).toStrictEqual(2);
 		cb.adjustRounds([8, 7, 8, 7, 7]);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 6000000, maxHp: 6000000, isHittable: true },
-			{ hp: 8000000, maxHp: 8000000, isHittable: true },
-			{ hp: 10000000, maxHp: 10000000, isHittable: true },
-			{ hp: 12000000, maxHp: 12000000, isHittable: true },
-			{ hp: 15000000, maxHp: 15000000, isHittable: true },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: true },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 		expect(cb.tier).toStrictEqual(1);
 		cb.adjustRounds([11, 9, 10, 11, 9]);
 		expect(cb.tier).toStrictEqual(1);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 6000000, maxHp: 6000000, isHittable: false },
-			{ hp: 8000000, maxHp: 8000000, isHittable: true },
-			{ hp: 10000000, maxHp: 10000000, isHittable: true },
-			{ hp: 12000000, maxHp: 12000000, isHittable: false },
-			{ hp: 15000000, maxHp: 15000000, isHittable: true },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: false },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: false },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 		cb.adjustRounds([45, 45, 45, 46, 46]);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 90000000, maxHp: 90000000, isHittable: true },
-			{ hp: 95000000, maxHp: 95000000, isHittable: true },
-			{ hp: 100000000, maxHp: 100000000, isHittable: true },
-			{ hp: 110000000, maxHp: 110000000, isHittable: true },
-			{ hp: 130000000, maxHp: 130000000, isHittable: true },
+			{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: true },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 		expect(cb.tier).toStrictEqual(4);
 	});
@@ -90,24 +90,24 @@ describe('CB', () => {
 		expect(() => {
 			cb.adjustRounds([41, 41, 41, 41, 41], [48000000, 50000000, 50000000, 50000000]);
 		}).toThrowError();
-		cb.adjustRounds([11, 9, 10, 11, 9], [3000000, 0, 5000000, 4000000, 19000000]);
+		cb.adjustRounds([11, 9, 10, 11, 9], [3000000, 0, 5000000, 4000000, HP[4][cb.tier] + 100]);
 		expect(cb.tier).toStrictEqual(1);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 3000000, maxHp: 6000000, isHittable: false },
-			{ hp: 8000000, maxHp: 8000000, isHittable: true },
-			{ hp: 5000000, maxHp: 10000000, isHittable: true },
-			{ hp: 4000000, maxHp: 12000000, isHittable: false },
-			{ hp: 15000000, maxHp: 15000000, isHittable: true },
+			{ hp: 3000000, maxHp: HP[0][cb.tier], isHittable: false },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+			{ hp: 5000000, maxHp: HP[2][cb.tier], isHittable: true },
+			{ hp: 4000000, maxHp: HP[3][cb.tier], isHittable: false },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 		]);
 		expect(cb.rounds).toStrictEqual([11, 9, 10, 11, 9]);
-		cb.adjustRounds([9, 10, 10, 8, 10], [3000000, 0, 5000000, 4000000, 19000000]);
+		cb.adjustRounds([9, 10, 10, 8, 10], [3000000, 0, 5000000, 4000000, 190000000]);
 		expect(cb.tier).toStrictEqual(1);
 		expect(cb.boss).toStrictEqual([
-			{ hp: 3000000, maxHp: 6000000, isHittable: true },
-			{ hp: 8000000, maxHp: 8000000, isHittable: false },
-			{ hp: 5000000, maxHp: 10000000, isHittable: false },
-			{ hp: 4000000, maxHp: 12000000, isHittable: true },
-			{ hp: 15000000, maxHp: 15000000, isHittable: false },
+			{ hp: 3000000, maxHp: HP[0][cb.tier], isHittable: true },
+			{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: false },
+			{ hp: 5000000, maxHp: HP[2][cb.tier], isHittable: false },
+			{ hp: 4000000, maxHp: HP[3][cb.tier], isHittable: true },
+			{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: false },
 		]);
 		expect(cb.rounds).toStrictEqual([9, 10, 10, 8, 10]);
 	});
@@ -166,36 +166,36 @@ describe('CB interaction', () => {
 			[1, 1, 1, 1, 1],
 			0,
 			[
-				{ hp: 2000000, maxHp: 4000000, isHittable: true },
-				{ hp: 6000000, maxHp: 6000000, isHittable: true },
-				{ hp: 8000000, maxHp: 8000000, isHittable: true },
-				{ hp: 10000000, maxHp: 10000000, isHittable: true },
-				{ hp: 12000000, maxHp: 12000000, isHittable: true },
+				{ hp: HP[0][cb.tier] - 2000000, maxHp: HP[0][cb.tier], isHittable: true },
+				{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+				{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+				{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+				{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 			],
 		]);
-		cb.hit(1, 6000000);
-		cb.hit(2, 8000000);
+		cb.hit(1, HP[1][cb.tier]);
+		cb.hit(2, HP[2][cb.tier]);
 		expect([cb.rounds, cb.tier, cb.boss]).toStrictEqual([
 			[1, 2, 2, 1, 1],
 			0,
 			[
-				{ hp: 2000000, maxHp: 4000000, isHittable: true },
-				{ hp: 6000000, maxHp: 6000000, isHittable: true },
-				{ hp: 8000000, maxHp: 8000000, isHittable: true },
-				{ hp: 10000000, maxHp: 10000000, isHittable: true },
-				{ hp: 12000000, maxHp: 12000000, isHittable: true },
+				{ hp: HP[0][cb.tier] - 2000000, maxHp: HP[0][cb.tier], isHittable: true },
+				{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+				{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+				{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+				{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 			],
 		]);
-		cb.hit(0, 2000000);
+		cb.hit(0, HP[0][cb.tier] - 2000000);
 		expect([cb.rounds, cb.tier, cb.boss]).toStrictEqual([
 			[2, 2, 2, 1, 1],
 			0,
 			[
-				{ hp: 4000000, maxHp: 4000000, isHittable: true },
-				{ hp: 6000000, maxHp: 6000000, isHittable: true },
-				{ hp: 8000000, maxHp: 8000000, isHittable: true },
-				{ hp: 10000000, maxHp: 10000000, isHittable: true },
-				{ hp: 12000000, maxHp: 12000000, isHittable: true },
+				{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: true },
+				{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+				{ hp: HP[2][cb.tier], maxHp: HP[2][cb.tier], isHittable: true },
+				{ hp: HP[3][cb.tier], maxHp: HP[3][cb.tier], isHittable: true },
+				{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 			],
 		]);
 		cb.kill(0);
@@ -211,15 +211,16 @@ describe('CB interaction', () => {
 		cb.setHp(2, 3000000);
 		cb.setHp(3, 0);
 		cb.setHp(3, 11000000);
+		cb.setHp(4, HP[4][cb.tier] + 3000000);
 		expect([cb.rounds, cb.tier, cb.boss]).toStrictEqual([
 			[3, 2, 2, 2, 1],
 			0,
 			[
-				{ hp: 4000000, maxHp: 4000000, isHittable: false },
-				{ hp: 6000000, maxHp: 6000000, isHittable: true },
-				{ hp: 3000000, maxHp: 8000000, isHittable: true },
-				{ hp: 10000000, maxHp: 10000000, isHittable: true },
-				{ hp: 12000000, maxHp: 12000000, isHittable: true },
+				{ hp: HP[0][cb.tier], maxHp: HP[0][cb.tier], isHittable: false },
+				{ hp: HP[1][cb.tier], maxHp: HP[1][cb.tier], isHittable: true },
+				{ hp: 3000000, maxHp: HP[2][cb.tier], isHittable: true },
+				{ hp: 11000000, maxHp: HP[3][cb.tier], isHittable: true },
+				{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 			],
 		]);
 	});
