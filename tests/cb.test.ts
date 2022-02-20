@@ -1,4 +1,5 @@
-import CB, { HP } from '../src';
+import CB, { HP, loadProgress, TIER_CHANGES } from '../src';
+import { CbProgress } from '../src/types';
 
 describe('CB', () => {
 	let cb = new CB();
@@ -223,6 +224,46 @@ describe('CB interaction', () => {
 				{ hp: HP[4][cb.tier], maxHp: HP[4][cb.tier], isHittable: true },
 			],
 		]);
+	});
+});
+
+describe('Progress', () => {
+	const cbProg: CbProgress = {
+		TierChanges: TIER_CHANGES,
+		HP,
+
+		// variables
+		rounds: [36, 37, 38, 36, 36],
+		boss: [
+			{ hp: 100, maxHp: HP[0][3], isHittable: true },
+			{ hp: 2000, maxHp: HP[1][3], isHittable: true },
+			{ hp: HP[2][3], maxHp: HP[2][3], isHittable: false },
+			{ hp: 50000, maxHp: HP[3][3], isHittable: true },
+			{ hp: 5000000, maxHp: HP[4][3], isHittable: true },
+		],
+		tier: 3,
+		minRound: 36,
+		maxRound: 38,
+	};
+
+	test('should be restored correctly', () => {
+		loadProgress(cbProg, true)
+			.then((cb) => {
+				expect([cb.rounds, cb.tier, cb.boss]).toStrictEqual([
+					[36, 37, 38, 36, 36],
+					3,
+					[
+						{ hp: 100, maxHp: HP[0][3], isHittable: true },
+						{ hp: 2000, maxHp: HP[1][3], isHittable: true },
+						{ hp: HP[2][3], maxHp: HP[2][3], isHittable: false },
+						{ hp: 50000, maxHp: HP[3][3], isHittable: true },
+						{ hp: 5000000, maxHp: HP[4][3], isHittable: true },
+					],
+				]);
+			})
+			.catch((err) => {
+				console.log(err.message);
+			});
 	});
 });
 

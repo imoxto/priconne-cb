@@ -1,3 +1,6 @@
+import { CbProgress } from './types';
+import { CbProgressSchema } from './schemas';
+
 export const HP = [
 	[6000000, 6000000, 12000000, 19000000, 95000000],
 	[8000000, 8000000, 14000000, 20000000, 100000000],
@@ -7,6 +10,24 @@ export const HP = [
 ];
 
 export const TIER_CHANGES = [1, 4, 11, 31, 39];
+
+/**
+ * A fuction to return a new CB element with previous progress
+ * @param prog previous CB progess with variables only
+ * @param validate Set it to false if validation not required
+ */
+export const loadProgress = async (prog: CbProgress, validate = true) => {
+	const cb = new CB();
+	if (validate) await CbProgressSchema.validate(prog);
+	cb.setMaxHp(prog.HP);
+	cb.setTierChanges(prog.TierChanges);
+	cb.boss = prog.boss;
+	cb.rounds = prog.rounds;
+	cb.minRound = prog.minRound;
+	cb.maxRound = prog.maxRound;
+
+	return cb;
+};
 
 class CB {
 	// constants ...should change every cb lol
